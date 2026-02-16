@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="url"],
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #888;
+        }
+
+        input:focus {
+            border-color: #7c5cfc;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: #7c5cfc;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #6344e0;
+        }
+
+        .result {
+            background: rgba(124, 92, 252, 0.15);
+            border: 1px solid rgba(124, 92, 252, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result a {
+            color: #a78bfa;
+            font-size: 1.2rem;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .result a:hover {
+            text-decoration: underline;
+        }
+
+        .result .original {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .error {
+            background: rgba(252, 92, 92, 0.15);
+            border: 1px solid rgba(252, 92, 92, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            color: #fc5c5c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <p class="subtitle">Paste a long URL and get a short link</p>
+
+        <form action="/shorten" method="POST">
+            <input type="text" name="url" placeholder="https://example.com/very-long-url" required>
+            <button type="submit">Shorten</button>
+        </form>
+
+        {% if short_url %}
+        <div class="result">
+            <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+            <p class="original">Original: {{ original_url }}</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
