@@ -57,6 +57,14 @@ class Database:
         conn.commit()
         conn.close()
 
+    def get_all_urls(self):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT short_code, original_url, clicks, created_at FROM urls ORDER BY created_at DESC')
+        results = cursor.fetchall()
+        conn.close()
+        return [dict(row) for row in results]
+
     def get_stats(self, short_code):
         conn = self.get_connection()
         cursor = conn.cursor()

@@ -44,6 +44,11 @@ def redirect_url(short_code):
         return redirect(url)
     return render_template('index.html', error='Short URL not found'), 404
 
+@app.route('/all')
+def all_urls():
+    urls = db.get_all_urls()
+    return jsonify(urls)
+
 @app.route('/stats/<short_code>')
 def stats(short_code):
     data = db.get_stats(short_code)
