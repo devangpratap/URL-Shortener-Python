@@ -56,6 +56,13 @@ def stats(short_code):
         return jsonify(data)
     return jsonify({'error': 'URL not found'}), 404
 
+@app.route('/delete/<short_code>', methods=['DELETE'])
+def delete_url(short_code):
+    if db.get_url(short_code):
+        db.delete_url(short_code)
+        return jsonify({'message': f'URL {short_code} deleted successfully'})
+    return jsonify({'error': 'URL not found'}), 404
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'

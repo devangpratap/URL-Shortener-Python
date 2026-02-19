@@ -57,6 +57,13 @@ class Database:
         conn.commit()
         conn.close()
 
+    def delete_url(self, short_code):
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM urls WHERE short_code = ?', (short_code,))
+        conn.commit()
+        conn.close()
+
     def get_all_urls(self):
         conn = self.get_connection()
         cursor = conn.cursor()
